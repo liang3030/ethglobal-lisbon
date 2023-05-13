@@ -24,12 +24,12 @@ https://tome.app/home-aa1d/onboarding-web2-users-to-web3-with-ai-assistance-clhk
 
 ## Features
 
-- Add Nouns Image API to keep the frontcover of the app fine and unexpected.
+- Add Nouns Image API to keep the front cover of the app fine and unexpected.
 - Chatbot Assistance: An AI-powered chatbot is integrated to provide real-time assistance and answer user queries during onboarding.
 - Allow first-time users to claim Lens handles and use the option to "Sign in with Lens".
 - Allow first-time users to use Safe Core onramp to purchase gas tokens on Polygon. 
-- Enable users to mint genesis AI Pass via Polygon Mumbai. Smart Contract here, https://mumbai.polygonscan.com/address/0x7f6119ed7635BbC54de68947d6678b0e0230F6bd
-- Enable users to mint genesis AI Pass via Linea. Keep calm and love lisbon, 
+- Enable users to mint Genesis AI Pass via Polygon Mumbai. Smart Contract here, https://mumbai.polygonscan.com/address/0x7f6119ed7635BbC54de68947d6678b0e0230F6bd
+- Enable users to mint Genesis AI Pass via Linea. Keep calm and love lisbon, 
 https://explorer.goerli.linea.build/address/0xc221A2242c584308F2fA5621E56D645767364924
 
 ## Getting Started
