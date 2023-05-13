@@ -35,10 +35,11 @@ https://tome.app/home-aa1d/onboarding-web2-users-to-web3-with-ai-assistance-clhk
 
 To set up the project locally, follow these steps:
 
-1. Clone the repository: `git clone https://github.com/your-username/ai-assisted-onboarding.git`
-2. Install the required dependencies: `npm install`
-3. Configure the environment variables: Create a `.env` file and provide necessary configuration details (e.g., API keys, database connection).
-4. Start the application: `npm start`
+1. Clone the repository: `git clone https://github.com/liang3030/ethglobal-lisbon`
+2. Go to the `packages/clarity`
+3. Configure the environment variables: Create a `.env` file, and provide necessary details. The specific variables, you could find in `.env.example` file.
+4. Install the required dependencies: `yarn install`
+5. Start the application in development environment: `yarn start`
 
 ## Usage
 
