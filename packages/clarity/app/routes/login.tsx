@@ -1,7 +1,10 @@
 import type { V2_MetaFunction } from "@remix-run/node";
+import { redirect } from "@remix-run/node";
+
 import * as React from "react";
 import { ethers } from "ethers";
 import { authenticate, challenge, client } from "~/lib/lens-graphql-api";
+import safeTransaction from "~/lib/safe-protocol.server";
 
 declare global {
   interface Window {
@@ -10,6 +13,11 @@ declare global {
 }
 
 export const meta: V2_MetaFunction = () => [{ title: "Clarity" }];
+
+export async function action() {
+  await safeTransaction();
+  return redirect(`/login`);
+}
 
 export default function Index() {
   const [address, setAddress] = React.useState<string | undefined>();
@@ -59,7 +67,6 @@ export default function Index() {
           signature,
         },
       });
-      /* if user authentication is successful, you will receive an accessToken and refreshToken */
       const {
         data: {
           authenticate: { accessToken },
@@ -67,20 +74,43 @@ export default function Index() {
       } = authData;
       setToken(accessToken);
     } catch (err) {
-      // TODO: deal with error
-      console.log("Error signing in: ", err);
+      const { message } = err as any;
+      alert(`Error signing in: ${message} `);
     }
   };
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-white">
       <div className="flex h-[668px] w-[460px] flex-col items-center justify-center bg-[#f2e6f7]">
-        {!address && <button onClick={connect}>Connect</button>}
+        {!address && (
+          <button
+            onClick={connect}
+            className="h-10 w-[240px] rounded-sm bg-slate-950 leading-[32px] text-white hover:cursor-pointer"
+          >
+            Connect with MetaMask
+          </button>
+        )}
         {address && !token && (
           <div onClick={login}>
-            <button>Login</button>
+            <button className="h-10 w-[240px] rounded-sm bg-slate-950 leading-[32px] text-white hover:cursor-pointer">
+              Sign in with Lens
+            </button>
           </div>
         )}
-        {address && token && <h2>Successfully signed in!</h2>}
+        {address && token && (
+          <>
+            <h2 className="font-grotesk text-2xl font-semibold text-black">
+              You have now signed in with Lens
+            </h2>
+            <form method="post">
+              <button
+                type="submit"
+                className="h-10 w-[240px] rounded-sm bg-slate-950 leading-[32px] text-white hover:cursor-pointer"
+              >
+                Get some network tokens
+              </button>
+            </form>
+          </>
+        )}
       </div>
     </main>
   );

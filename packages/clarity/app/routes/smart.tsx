@@ -1,11 +1,10 @@
 import type { LoaderArgs, V2_MetaFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 
-// import { authenticate, challenge, client } from "~/lib/lens-graphql-api";
-// import openAI from "~/lib/open-ai.server";
 import { tutorialMachine, tutorialService } from "~/lib/state-machine.server";
 import { useLoaderData, useNavigate, useNavigation } from "@remix-run/react";
 import openAI from "~/lib/open-ai.server";
+import React from "react";
 
 export const meta: V2_MetaFunction = () => [{ title: "Clarity" }];
 
@@ -64,6 +63,7 @@ export default function Index() {
     const query = `https://noun-api.com/beta/pfp?name=${name}&head=${head}&body=${body}&accessory=${accessory}&size=240`;
     return query;
   };
+  const [selected, setSelected] = React.useState<string | null>(null);
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-white">
@@ -74,7 +74,7 @@ export default function Index() {
         {transition.state === "idle" && value.toString() !== "final" ? (
           <form method="get">
             <p>
-              <label className="mt-2 w-[320px] font-grotesk text-lg">
+              <label className="mb-3 mt-2 w-[320px] font-grotesk text-xl">
                 {tags[0]}
               </label>
               <input
@@ -111,17 +111,26 @@ export default function Index() {
               </p>
             ))}
 
-            <div className="mt-5 flex w-[320px] flex-row justify-between">
+            <div className="my-5 flex w-[320px] flex-row justify-between">
               {branches.length > 1 &&
                 branches.map((branch) => (
                   <div key={branch}>
-                    <input
-                      type="radio"
-                      id={branch}
-                      name="branch"
-                      value={branch}
-                    />
-                    <label className="font-grotesk" htmlFor={branch}>
+                    <label
+                      className={`block h-12 w-12 rounded-md border-slate-800 bg-white text-center font-grotesk leading-[48px] shadow-md shadow-slate-950 hover:cursor-pointer ${
+                        selected == branch ? "text-pink-700" : "text-black"
+                      }`}
+                      htmlFor={branch}
+                      onClick={(e) => {
+                        setSelected(branch);
+                      }}
+                    >
+                      <input
+                        className="hidden"
+                        type="radio"
+                        id={branch}
+                        name="branch"
+                        value={branch}
+                      />
                       {branch}
                     </label>
                   </div>
@@ -137,13 +146,17 @@ export default function Index() {
             </p>
           </form>
         ) : (
-          <button
-            onClick={(e) => {
-              navigate("/login");
-            }}
-          >
-            Go to sign in
-          </button>
+          <div className="mx-auto flex w-[320px] flex-col">
+            Congratulations! You have now completed the onboarding process.
+            <button
+              className="mt-3 w-24 rounded-lg bg-slate-700 text-white"
+              onClick={(e) => {
+                navigate("/login");
+              }}
+            >
+              Next
+            </button>
+          </div>
         )}
         {transition.state === "loading" ? <p>Waiting ......</p> : <></>}
       </div>
